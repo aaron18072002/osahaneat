@@ -1,5 +1,6 @@
 package com.aaron.osahaneat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class Role {
     @Column(name = "create_date", columnDefinition = "DATETIME")
     private LocalDateTime createDate;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
     private List<User> users;
 
