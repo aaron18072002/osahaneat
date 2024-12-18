@@ -3,6 +3,7 @@ package com.aaron.osahaneat.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "Roles")
 public class Role {
@@ -17,6 +18,17 @@ public class Role {
 
     @Column(name = "create_date", columnDefinition = "DATETIME")
     private LocalDateTime createDate;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     public int getRoleId() {
         return roleId;
