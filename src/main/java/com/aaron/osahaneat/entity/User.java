@@ -3,6 +3,7 @@ package com.aaron.osahaneat.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "Users")
 public class User {
@@ -27,6 +28,15 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "FK_user_role"))
     private Role role;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<RatingFood> ratingFoods;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<RatingRestaurant> ratingRestaurants;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Order> orders;
 
     public int getUserId() {
         return userId;
