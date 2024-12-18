@@ -133,6 +133,8 @@ SELECT * FROM roles;
 
 INSERT INTO users(user_name,password,fullname,create_date,role_id)
 VALUES ('test1','123456','Nguyen Van Test1', NOW(),3);
+INSERT INTO users(user_name,password,fullname,create_date,role_id)
+VALUES ('test2','123456','Nguyen Van Test2', NOW(),3);
 
 SELECT * FROM users;
 
