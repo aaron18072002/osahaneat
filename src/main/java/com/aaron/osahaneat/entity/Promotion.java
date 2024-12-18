@@ -6,7 +6,7 @@ import org.springframework.cglib.core.Local;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity(name = "Promotions")
+@Entity(name = "promotions")
 public class Promotion {
 
     @Id

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity(name = "Categories")
+@Entity(name = "categories")
 public class Category {
 
     @Id

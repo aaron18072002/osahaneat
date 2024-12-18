@@ -3,9 +3,10 @@ package com.aaron.osahaneat.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Entity(name = "Users")
+@Entity(name = "users")
 public class User {
 
     @Id
@@ -86,4 +87,18 @@ public class User {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", createDate=" + createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
+                ", role=" + role +
+                ", ratingFoods=" + ratingFoods +
+                ", ratingRestaurants=" + ratingRestaurants +
+                ", orders=" + orders +
+                '}';
+    }
 }
