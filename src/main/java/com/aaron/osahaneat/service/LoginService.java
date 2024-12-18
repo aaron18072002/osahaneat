@@ -19,8 +19,12 @@ public class LoginService {
         List<User> users = this.userInterface.findAll();
         List<UserDTO> userDtos = new ArrayList<>();
         for (User user : users) {
-            userDtos.add(new UserDTO(user));
-            System.out.println(user);
+            userDtos.add(new UserDTO.Builder()
+                    .withFullname(user.getFullname())
+                    .withUserName(user.getUserName())
+                    .withPassword(user.getPassword())
+                    .withRole(user.getRole())
+                    .build());
         }
         return userDtos;
     }
