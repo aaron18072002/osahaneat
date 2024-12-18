@@ -125,4 +125,3 @@ ALTER TABLE Promotions
 ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES Restaurants(restaurant_id);
 
 
-
