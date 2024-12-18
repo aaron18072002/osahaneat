@@ -1,23 +1,23 @@
 CREATE DATABASE osahaneat;
 USE osahaneat;
 
-CREATE TABLE Roles (
+CREATE TABLE roles (
 	role_id INT auto_increment PRIMARY KEY,
     role_name VARCHAR(20),
     create_date DATETIME
 );
 
-CREATE TABLE Users (
+CREATE TABLE users (
 	user_id INT auto_increment PRIMARY KEY,
     user_name VARCHAR(50) NOT NULL,
     password VARCHAR(255),
     fullname VARCHAR(50),
     create_date DATETIME,
     role_id INT,
-	FOREIGN KEY(role_id) REFERENCES Roles(role_id)
+	FOREIGN KEY(role_id) REFERENCES roles(role_id)
 );
 
-CREATE TABLE RatingFoods (
+CREATE TABLE rating_foods (
 	ratingfood_id INT auto_increment PRIMARY KEY,
     user_id INT,
     food_id INT,
@@ -25,13 +25,13 @@ CREATE TABLE RatingFoods (
     rate_point INT(5)
 );
 
-CREATE TABLE Categories (
+CREATE TABLE categories (
 	category_id INT auto_increment PRIMARY KEY,
     category_name VARCHAR(30) NOT NULL,
     create_date DATETIME
 );
 
-CREATE TABLE Foods (
+CREATE TABLE foods (
 	food_id INT auto_increment PRIMARY KEY,
     title VARCHAR(50),
     image TEXT,
@@ -40,7 +40,7 @@ CREATE TABLE Foods (
     category_id INT
 );
 
-CREATE TABLE RatingRestaurants (
+CREATE TABLE rating_restaurants (
 	ratingrestaurant_id INT auto_increment PRIMARY KEY,
 	user_id INT,
     restaurant_id INT,
@@ -48,14 +48,14 @@ CREATE TABLE RatingRestaurants (
     rate_point INT(5)
 );
 
-CREATE TABLE Orders (
+CREATE TABLE orders (
 	order_id INT auto_increment PRIMARY KEY,
     user_id INT,
     restaurant_id INT,
     create_date DATETIME
 );
 
-CREATE TABLE MenuRestaurants (
+CREATE TABLE menu_restaurants (
 	category_id INT,
     restaurant_id INT,
     create_date DATETIME,
@@ -63,7 +63,7 @@ CREATE TABLE MenuRestaurants (
     PRIMARY KEY(category_id, restaurant_id)
 );
 
-CREATE TABLE Restaurants (
+CREATE TABLE restaurants (
 	restaurant_id INT auto_increment PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     subtitle VARCHAR(255),
@@ -74,7 +74,7 @@ CREATE TABLE Restaurants (
     open_date DATETIME
 );
 
-CREATE TABLE Promotions (
+CREATE TABLE promotions (
 	promotion_id INT auto_increment PRIMARY KEY,
     restaurant_id INT,
     percent DECIMAL(4,2),
@@ -82,7 +82,7 @@ CREATE TABLE Promotions (
     end_date DATE
 );
 
-CREATE TABLE OrderDetails (
+CREATE TABLE order_details (
 	order_id INT,
     food_id INT,
     create_date DATETIME,
@@ -90,38 +90,50 @@ CREATE TABLE OrderDetails (
     PRIMARY KEY(order_id, food_id)
 );
 
-ALTER TABLE Users
-ADD CONSTRAINT FOREIGN KEY(role_id) REFERENCES Roles(role_id);
+ALTER TABLE users
+ADD CONSTRAINT FOREIGN KEY(role_id) REFERENCES roles(role_id);
 
-ALTER TABLE RatingFoods
-ADD CONSTRAINT FOREIGN KEY(user_id) REFERENCES Users(user_id);
-ALTER TABLE RatingFoods
-ADD CONSTRAINT FOREIGN KEY(food_id) REFERENCES Foods(food_id);
+ALTER TABLE rating_foods
+ADD CONSTRAINT FOREIGN KEY(user_id) REFERENCES users(user_id);
+ALTER TABLE rating_foods
+ADD CONSTRAINT FOREIGN KEY(food_id) REFERENCES foods(food_id);
 
-ALTER TABLE Foods
-ADD CONSTRAINT FOREIGN KEY(category_id) REFERENCES Categories(category_id);
+ALTER TABLE foods
+ADD CONSTRAINT FOREIGN KEY(category_id) REFERENCES categories(category_id);
 
-ALTER TABLE RatingRestaurants
-ADD CONSTRAINT FOREIGN KEY(user_id) REFERENCES Users(user_id);
-ALTER TABLE RatingRestaurants
-ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES Restaurants(restaurant_id);
+ALTER TABLE rating_restaurants
+ADD CONSTRAINT FOREIGN KEY(user_id) REFERENCES users(user_id);
+ALTER TABLE rating_restaurants
+ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES restaurants(restaurant_id);
 
-ALTER TABLE Orders
-ADD CONSTRAINT FOREIGN KEY(user_id) REFERENCES Users(user_id);
-ALTER TABLE Orders
-ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES Restaurants(restaurant_id);
+ALTER TABLE orders
+ADD CONSTRAINT FOREIGN KEY(user_id) REFERENCES users(user_id);
+ALTER TABLE orders
+ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES restaurants(restaurant_id);
 
-ALTER TABLE OrderDetails
-ADD CONSTRAINT FOREIGN KEY(order_id) REFERENCES Orders(order_id);
-ALTER TABLE OrderDetails
-ADD CONSTRAINT FOREIGN KEY(food_id) REFERENCES Foods(food_id);
+ALTER TABLE order_details
+ADD CONSTRAINT FOREIGN KEY(order_id) REFERENCES orders(order_id);
+ALTER TABLE order_details
+ADD CONSTRAINT FOREIGN KEY(food_id) REFERENCES foods(food_id);
 
-ALTER TABLE MenuRestaurants
-ADD CONSTRAINT FOREIGN KEY(category_id) REFERENCES Categories(category_id);
-ALTER TABLE MenuRestaurants
-ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES Restaurants(restaurant_id);
+ALTER TABLE menu_restaurants
+ADD CONSTRAINT FOREIGN KEY(category_id) REFERENCES categories(category_id);
+ALTER TABLE menu_restaurants
+ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES restaurants(restaurant_id);
 
-ALTER TABLE Promotions
-ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES Restaurants(restaurant_id);
+ALTER TABLE promotions
+ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES restaurants(restaurant_id);
+
+INSERT INTO roles(role_name,create_date)
+VALUES	('ROLE_ADMIN', NOW()),
+		('ROLE_GUEST', NOW()),
+        ('ROLE_USER', NOW());
+        
+SELECT * FROM roles;
+
+INSERT INTO users(user_name,password,fullname,create_date,role_id)
+VALUES ('test1','123456','Nguyen Van Test1', NOW(),3);
+
+SELECT * FROM users;
 
 
