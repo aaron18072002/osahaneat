@@ -7,6 +7,7 @@ import com.aaron.osahaneat.repository.UserRepository;
 import com.aaron.osahaneat.service.imp.LoginServiceImp;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +23,9 @@ public class LoginService implements LoginServiceImp {
     @Autowired
     //@Qualifier("")
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -43,8 +47,10 @@ public class LoginService implements LoginServiceImp {
 
     @Override
     public boolean checkLogin(String userName, String password) {
-        List<User> users = this.userRepository.findByUsernameAndPassword(userName, password);
-        return users.size() > 0;
+        User user = this.userRepository.findByUsername(userName).orElse(null);
+        String encodedPassword = user.getPassword();
+
+        return  user != null && passwordEncoder.matches(password, encodedPassword);
     }
 
     @Transactional

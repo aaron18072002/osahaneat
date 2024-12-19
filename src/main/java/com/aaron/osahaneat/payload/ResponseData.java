@@ -10,6 +10,7 @@ package com.aaron.osahaneat.payload;
 public class ResponseData {
 
     private int status;
+    private boolean isSuccess = true;
     private String desc;
     private Object data;
 
@@ -21,6 +22,14 @@ public class ResponseData {
         this.status = status;
         this.desc = desc;
         this.data = data;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
     }
 
     public int getStatus() {
