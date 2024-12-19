@@ -2,7 +2,8 @@ package com.aaron.osahaneat.service;
 
 import com.aaron.osahaneat.dto.UserDTO;
 import com.aaron.osahaneat.entity.User;
-import com.aaron.osahaneat.repository.UserInterface;
+import com.aaron.osahaneat.repository.UserRepository;
+import com.aaron.osahaneat.service.imp.LoginServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LoginService {
+public class LoginService implements LoginServiceImp {
 
     @Autowired
-    private UserInterface userInterface;
+    private UserRepository userRepository;
 
+    @Override
     public List<UserDTO> getAllUsers() {
-        List<User> users = this.userInterface.findAll();
+        List<User> users = this.userRepository.findAll();
         List<UserDTO> userDtos = new ArrayList<>();
         for (User user : users) {
             userDtos.add(new UserDTO.Builder()
@@ -27,6 +29,12 @@ public class LoginService {
                     .build());
         }
         return userDtos;
+    }
+
+    @Override
+    public boolean checkLogin(String userName, String password) {
+        List<User> users = this.userRepository.findByUsernameAndPassword(userName, password);
+        return users.size() > 0;
     }
 
 }
