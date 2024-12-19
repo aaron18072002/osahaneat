@@ -124,6 +124,9 @@ ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES restaurants(restaurant_id);
 ALTER TABLE promotions
 ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES restaurants(restaurant_id);
 
+ALTER TABLE users
+ALTER COLUMN role_id set default 3;
+
 INSERT INTO roles(role_name,create_date)
 VALUES	('ROLE_ADMIN', NOW()),
 		('ROLE_GUEST', NOW()),
@@ -135,6 +138,8 @@ INSERT INTO users(user_name,password,fullname,create_date,role_id)
 VALUES ('test1','123456','Nguyen Van Test1', NOW(),3);
 INSERT INTO users(user_name,password,fullname,create_date,role_id)
 VALUES ('test2','123456','Nguyen Van Test2', NOW(),3);
+INSERT INTO users(user_name,password,fullname,create_date)
+VALUES ('test3@gmail.com','123456','Nguyen Van Test3', NOW());
 
 SELECT * FROM users;
 
