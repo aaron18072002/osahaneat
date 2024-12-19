@@ -125,7 +125,8 @@ ALTER TABLE promotions
 ADD CONSTRAINT FOREIGN KEY(restaurant_id) REFERENCES restaurants(restaurant_id);
 
 ALTER TABLE users
-ALTER COLUMN role_id set default 3;
+ADD CONSTRAINT unique(user_name);
+-- ALTER COLUMN role_id set default 3; 
 
 INSERT INTO roles(role_name,create_date)
 VALUES	('ROLE_ADMIN', NOW()),
