@@ -5,6 +5,7 @@ import com.aaron.osahaneat.entity.User;
 import com.aaron.osahaneat.repository.UserRepository;
 import com.aaron.osahaneat.service.imp.LoginServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 public class LoginService implements LoginServiceImp {
 
     @Autowired
+    //@Qualifier("")
     private UserRepository userRepository;
 
     @Override
