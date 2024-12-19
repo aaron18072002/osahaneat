@@ -31,7 +31,7 @@ public class LoginService implements LoginServiceImp {
         List<User> users = this.userRepository.findAll();
         List<UserDTO> userDtos = new ArrayList<>();
         for (User user : users) {
-            userDtos.add(new UserDTO.Builder()
+            userDtos.add(UserDTO.builder()
                     .withFullname(user.getFullname())
                     .withUserName(user.getUserName())
                     .withPassword(user.getPassword())
