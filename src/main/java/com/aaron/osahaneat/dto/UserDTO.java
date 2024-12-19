@@ -10,11 +10,11 @@ public class UserDTO {
     private String fullname;
     private Role role;
 
-    public UserDTO() {
+    private UserDTO() {
 
     }
 
-    public UserDTO(Builder builder) {
+    private UserDTO(Builder builder) {
         this.userName = builder.userName;
         this.password = builder.password;
         this.fullname = builder.fullname;
@@ -47,6 +47,10 @@ public class UserDTO {
         private String password;
         private String fullname;
         private Role role;
+
+        private Builder() {
+
+        }
 
         // chỉ có setter
         public Builder withUserName(String userName) {
