@@ -11,3 +11,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+jwt:
+  privateKey: /ZRlqRQKbQvMEzyj9VnU+DbqygQyrquuD16Ff22ZwO8=
+
