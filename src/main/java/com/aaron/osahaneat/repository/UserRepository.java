@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserInterface extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT * FROM users AS U WHERE " +
                    "U.user_name = :userName AND U.password = :password",
