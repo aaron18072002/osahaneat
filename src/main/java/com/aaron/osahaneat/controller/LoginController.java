@@ -1,31 +1,34 @@
 package com.aaron.osahaneat.controller;
 
-import com.aaron.osahaneat.dto.UserDTO;
-import com.aaron.osahaneat.entity.User;
-
-import com.aaron.osahaneat.service.LoginService;
+import com.aaron.osahaneat.payload.ResponseData;
+import com.aaron.osahaneat.service.imp.LoginServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/login")
 public class LoginController {
 
     @Autowired
-    private LoginService loginService;
+    //@Qualifier("")
+    private LoginServiceImp loginService;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> login() {
-        List<UserDTO> userDtos = this.loginService.getAllUsers();
+    public ResponseEntity<?> login(@RequestParam String userName, @RequestParam String password) {
+        ResponseData responseData = new ResponseData();
+        if(this.loginService.checkLogin(userName, password) == true) {
+            responseData.setStatus(HttpStatus.OK.value());
+        } else {
+            responseData.setStatus(HttpStatus.UNAUTHORIZED.value());
+        }
 
-        return new ResponseEntity(userDtos, HttpStatus.OK);
+        return new ResponseEntity(responseData, HttpStatus.OK);
     }
 
 }
