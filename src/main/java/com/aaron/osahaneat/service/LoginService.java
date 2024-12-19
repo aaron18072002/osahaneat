@@ -1,11 +1,13 @@
 package com.aaron.osahaneat.service;
 
 import com.aaron.osahaneat.dto.UserDTO;
-import com.aaron.osahaneat.entity.Role;
 import com.aaron.osahaneat.entity.User;
 import com.aaron.osahaneat.payload.request.SignupRequest;
 import com.aaron.osahaneat.repository.UserRepository;
 import com.aaron.osahaneat.service.imp.LoginServiceImp;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class LoginService implements LoginServiceImp {
     @Autowired
     //@Qualifier("")
     private UserRepository userRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -42,22 +47,24 @@ public class LoginService implements LoginServiceImp {
         return users.size() > 0;
     }
 
+    @Transactional
     @Override
     public boolean addUser(SignupRequest signupRequest) {
-        Role role = new Role();
-        role.setRoleId(signupRequest.getRoleId());
-
-        User user = new User();
-        user.setFullname(signupRequest.getFullname());
-        user.setPassword(signupRequest.getPassword());
-        user.setUserName(signupRequest.getUserName());
-        user.setRole(role);
-        user.setCreateDate(LocalDateTime.now());
-
+        String query = """
+                INSERT INTO users (user_name, password, fullname, create_date, role_id) 
+                VALUES (:un, :p, :fn,  :cd, :ri)
+                """;
         try {
-            this.userRepository.save(user); // INSERT INTO
+            this.entityManager.createNativeQuery(query)
+                    .setParameter("un", signupRequest.getUserName())
+                    .setParameter("p", signupRequest.getPassword())
+                    .setParameter("fn", signupRequest.getFullname())
+                    .setParameter("cd", LocalDateTime.now())
+                    .setParameter("ri", signupRequest.getRoleId())
+                    .executeUpdate();
             return true;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
