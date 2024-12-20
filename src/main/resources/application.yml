@@ -14,3 +14,6 @@ spring:
 jwt:
   privateKey: /ZRlqRQKbQvMEzyj9VnU+DbqygQyrquuD16Ff22ZwO8=
 
+fileUpload:
+  rootPath: D:\JAVA\osahaneat\src\main\resources\static\uploads
+
