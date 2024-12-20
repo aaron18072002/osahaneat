@@ -56,4 +56,13 @@ public class ResponseData {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "ResponseData{" +
+                "status=" + status +
+                ", isSuccess=" + isSuccess +
+                ", desc='" + desc + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

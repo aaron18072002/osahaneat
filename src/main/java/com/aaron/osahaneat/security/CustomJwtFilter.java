@@ -1,11 +1,13 @@
 package com.aaron.osahaneat.security;
 
+import com.aaron.osahaneat.payload.ResponseData;
 import com.aaron.osahaneat.util.JwtUtilHelper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,7 +35,9 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             }
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Unauthorized: Invalid or missing token");
+            ResponseData responseData = new ResponseData(HttpStatus.UNAUTHORIZED.value(), null,null);
+            responseData.setSuccess(false);
+            response.getWriter().write(responseData.toString());
             return;
         }
 
