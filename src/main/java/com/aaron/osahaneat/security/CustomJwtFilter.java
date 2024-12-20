@@ -31,6 +31,10 @@ public class CustomJwtFilter extends OncePerRequestFilter {
                 SecurityContext securityContext = SecurityContextHolder.getContext();
                 securityContext.setAuthentication(usernamePasswordAuthenticationToken);
             }
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Unauthorized: Invalid or missing token");
+            return;
         }
 
         filterChain.doFilter(request, response);
