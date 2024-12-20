@@ -10,6 +10,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  servlet:
+    multipart:
+      max-file-size: 10MB
 
 jwt:
   privateKey: /ZRlqRQKbQvMEzyj9VnU+DbqygQyrquuD16Ff22ZwO8=
