@@ -15,10 +15,23 @@ public class JwtUtilHelper {
     private String privateKey;
 
     public String generateToken(String data) {
-        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(privateKey));
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(this.privateKey));
         String jwt = Jwts.builder().setSubject(data).signWith(secretKey).compact();
 
         return jwt;
+    }
+
+    public boolean verifyToken(String token) {
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(this.privateKey));
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }
